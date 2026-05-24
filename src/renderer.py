@@ -14,20 +14,16 @@ class ContourRenderer:
         self.color_mapper = ColorMapper()
     
     def render(self, frame: np.ndarray, masks: list, trails: list = None) -> np.ndarray:
-        if not masks and not trails:
-            return frame
-        
         overlay = frame.copy()
         
         if self.enable_trails and trails:
-            overlay = self._render_trails(overlay, trails)
-        
-        for mask in masks:
-            overlay = self._render_single_mask(overlay, mask)
+            current_mask = masks[0] if masks else None
+            overlay = self._render_trails(overlay, trails, current_mask)
         
         return overlay
     
-    def _render_trails(self, frame: np.ndarray, trails: list) -> np.ndarray:
+    def _render_trails(self, frame: np.ndarray, trails: list, 
+                       current_mask: np.ndarray = None) -> np.ndarray:
         result = frame.copy()
         
         if not trails:
@@ -37,8 +33,13 @@ class ContourRenderer:
             color = self.color_mapper.get_color_by_index(trail.color_index)
             alpha = self.color_mapper.get_alpha()
             
+            trail_mask = trail.mask.copy()
+            
+            if current_mask is not None:
+                trail_mask = trail_mask & (~current_mask.astype(bool)).astype(np.uint8)
+            
             result = self._render_trail_mask(result, trail.frame_region, 
-                                            trail.mask, color, alpha)
+                                            trail_mask, color, alpha)
         
         return result
     

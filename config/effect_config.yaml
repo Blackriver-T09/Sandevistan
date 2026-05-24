@@ -1,0 +1,25 @@
+# Sandevistan Effect Configuration
+
+# Contour settings
+contour:
+  color: [0, 255, 255]      # BGR: Cyan
+  thickness: 3              # Line width in pixels
+  
+# Fill settings
+fill:
+  color: [255, 200, 0]      # BGR: Cyan-Blue
+  alpha: 0.4                # Transparency (0.0-1.0)
+
+# Model settings
+model:
+  name: "yolov8n-seg.pt"    # Model: yolov8n-seg, yolov8s-seg, yolov8m-seg
+  conf: 0.5                 # Confidence threshold
+  iou: 0.7                  # NMS IoU threshold
+  device: "cpu"             # Device: cuda, cpu
+  classes: [0]              # Class IDs to detect (0=person)
+
+# Video processing
+video:
+  output_suffix: "_highlighted"
+  codec: "mp4v"             # Video codec
+  fps: null                 # Output FPS (null = same as input)

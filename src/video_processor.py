@@ -1,4 +1,5 @@
 import cv2
+import subprocess
 from pathlib import Path
 from tqdm import tqdm
 
@@ -71,6 +72,41 @@ class VideoProcessor:
             self.cap.release()
         if self.writer:
             self.writer.release()
+    
+    def merge_audio(self, video_path: Path):
+        temp_path = video_path.parent / f"{video_path.stem}_temp{video_path.suffix}"
+        video_path.rename(temp_path)
+        
+        cmd = [
+            'ffmpeg',
+            '-i', str(temp_path),
+            '-i', str(self.input_path),
+            '-c:v', 'copy',
+            '-c:a', 'aac',
+            '-map', '0:v:0',
+            '-map', '1:a:0?',
+            '-shortest',
+            '-y',
+            str(video_path)
+        ]
+        
+        try:
+            result = subprocess.run(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True
+            )
+            temp_path.unlink()
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Warning: Failed to merge audio: {e}")
+            temp_path.rename(video_path)
+            return False
+        except FileNotFoundError:
+            print("Warning: ffmpeg not found. Audio will not be included.")
+            temp_path.rename(video_path)
+            return False
     
     def _get_output_path(self):
         stem = self.input_path.stem

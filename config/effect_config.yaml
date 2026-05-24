@@ -18,8 +18,16 @@ model:
   device: "cpu"             # Device: cuda, cpu
   classes: [0]              # Class IDs to detect (0=person)
 
+# Trail settings (Sandevistan effect)
+trail:
+  enabled: true             # Enable motion trails
+  sample_interval: 3        # Sample every N frames (3 frames ≈ 0.1s @ 30fps)
+  alpha: 0.5                # Trail transparency (0.0-1.0)
+  saturation: 120           # Color saturation (0-255, lower = more pastel)
+  hue_step: 5               # Hue change per trail (1-30, lower = slower gradient)
+
 # Video processing
 video:
-  output_suffix: "_highlighted"
+  output_suffix: "_sandevistan"
   codec: "mp4v"             # Video codec
   fps: null                 # Output FPS (null = same as input)

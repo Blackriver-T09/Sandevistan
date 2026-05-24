@@ -58,3 +58,23 @@ class Config:
     @property
     def video_fps(self):
         return self.data['video']['fps']
+    
+    @property
+    def trail_enabled(self):
+        return self.data.get('trail', {}).get('enabled', False)
+    
+    @property
+    def trail_sample_interval(self):
+        return self.data.get('trail', {}).get('sample_interval', 3)
+    
+    @property
+    def trail_alpha(self):
+        return self.data.get('trail', {}).get('alpha', 0.5)
+    
+    @property
+    def trail_saturation(self):
+        return self.data.get('trail', {}).get('saturation', 120)
+    
+    @property
+    def trail_hue_step(self):
+        return self.data.get('trail', {}).get('hue_step', 5)

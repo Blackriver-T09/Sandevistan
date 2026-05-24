@@ -78,3 +78,7 @@ class Config:
     @property
     def trail_hue_step(self):
         return self.data.get('trail', {}).get('hue_step', 5)
+    
+    @property
+    def trail_hue_start(self):
+        return self.data.get('trail', {}).get('hue_start', 0)

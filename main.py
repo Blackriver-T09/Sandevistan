@@ -41,7 +41,8 @@ def main(input_video: str, config_path: str = None):
         renderer.color_mapper = ColorMapper(
             alpha=config.trail_alpha,
             saturation=config.trail_saturation,
-            hue_step=config.trail_hue_step
+            hue_step=config.trail_hue_step,
+            hue_start=config.trail_hue_start
         )
     
     def process_frame(frame):

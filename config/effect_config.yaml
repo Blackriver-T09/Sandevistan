@@ -15,7 +15,7 @@ model:
   name: "yolov8n-seg.pt"    # Model: yolov8n-seg, yolov8s-seg, yolov8m-seg
   conf: 0.5                 # Confidence threshold
   iou: 0.7                  # NMS IoU threshold
-  device: "cpu"             # Device: cuda, cpu
+  device: "cuda"            # Device: cuda, cpu
   classes: [0]              # Class IDs to detect (0=person)
 
 # Trail settings (Sandevistan effect)
